@@ -1,19 +1,16 @@
-import {createClient} from "soap";
+import { Response } from "express";
+import { Client } from "soap";
+import { createSoapClient, callSoapMethod } from "./../helper/soapwrapper";
 
-const url = "http://localhost:8042/admin?wsd";
+async function getSubscriptionList(req: any, res: any) {
+    const url = "http://localhost:8042/admin?wsdl";
 
-createClient(url, function(err, client) {
-    if(err) {
-        throw err;
-    }
+    const client: Client = await createSoapClient(url) as Client;
 
-    const args = {}
+    // Memanggil fungsi SOAP bernama getSubscriptionRequests
+    res.json(await callSoapMethod(client, "getSubscriptionRequests", {}));
+}
 
-    client.getSubscriptionRequests(args, function(err: any, res: any) {
-        if(err) {
-            throw err;
-
-            console.log(res);
-        }
-    });
-});
+export {
+    getSubscriptionList
+}
