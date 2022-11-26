@@ -10,13 +10,13 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getSubscriptionList = void 0;
-const soapwrapper_1 = require("./../helper/soapwrapper");
 function getSubscriptionList(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
-        const url = "http://localhost:8042/admin?wsdl";
-        const client = yield (0, soapwrapper_1.createSoapClient)(url);
-        // Memanggil fungsi SOAP bernama getSubscriptionRequests
-        res.json(yield (0, soapwrapper_1.callSoapMethod)(client, "getSubscriptionRequests", {}));
+        // const url = "http://localhost:8042/admin?wsdl";
+        // const client: Client = await createSoapClient(url) as Client;
+        // // Memanggil fungsi SOAP bernama getSubscriptionRequests
+        // res.json(await callSoapMethod(client, "getSubscriptionRequests", {}));
+        return res.json([]);
     });
 }
 exports.getSubscriptionList = getSubscriptionList;

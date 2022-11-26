@@ -1,11 +1,12 @@
-import express, { Application } from "express";
-import { Client } from "soap";
+import express from "express";
+import cors from 'cors';
 
 import endpoint from "./endpoints/endpoint";
 
-const app: Application = express();
+const port = 3000;
 
-const port: number = 3000;
+const app = express();
+app.use(cors());
 
 app.get("/subscriptionlist",(req, res) => {
     endpoint.getSubscriptionList(req, res);

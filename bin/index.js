@@ -4,9 +4,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
+const cors_1 = __importDefault(require("cors"));
 const endpoint_1 = __importDefault(require("./endpoints/endpoint"));
-const app = (0, express_1.default)();
 const port = 3000;
+const app = (0, express_1.default)();
+app.use((0, cors_1.default)());
 app.get("/subscriptionlist", (req, res) => {
     endpoint_1.default.getSubscriptionList(req, res);
 });
