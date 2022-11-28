@@ -9,8 +9,15 @@ const endpoint_1 = __importDefault(require("./endpoints/endpoint"));
 const port = 3000;
 const app = (0, express_1.default)();
 app.use((0, cors_1.default)());
-app.get("/subscriptionlist", (req, res) => {
+app.use(express_1.default.json());
+app.get("/subscription/list", (req, res) => {
     endpoint_1.default.getSubscriptionList(req, res);
+});
+app.post("/subscription/approve", (req, res) => {
+    endpoint_1.default.approveSubscription(req, res);
+});
+app.post("/subscription/decline", (req, res) => {
+    endpoint_1.default.declineSubscription(req, res);
 });
 app.listen(port, () => {
     console.log(`App is running on :${port}`);
