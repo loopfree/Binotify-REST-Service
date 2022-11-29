@@ -25,6 +25,10 @@ app.post("/premium_singer/list", (req, res) => {
     endpoint.getPremiumSingers(req, res);
 })
 
+app.post("/premium_singer/song", (req, res) => {
+    endpoint.getPremiumSingers(req, res);
+})
+
 app.listen(port, () => {
     console.log(`App is running on :${port}`);
 });
