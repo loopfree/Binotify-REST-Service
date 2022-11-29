@@ -7,7 +7,7 @@ async function getPremiumSongs(req: Request, res: Response) {
     var reqBody = req.body;          // {creatorId: 1, subscriberId: 1}
     const url = "http://localhost:8042/check?wsdl";
     const client: ClientSoap = await createSoapClient(url) as ClientSoap;
-    const status = await callSoapMethod(client, "checkStatus", reqBody);     // What type?
+    const status = await callSoapMethod(client, "checkStatus", reqBody);     // What type? Awaited<string>
 
     if (status === "ACCEPTED") {
         const client = new ClientPostgres({"host": "localhost", "port": 6002, "database": "catifyrest",
