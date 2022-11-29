@@ -10,7 +10,8 @@ async function getPremiumSongs(req: Request, res: Response) {
     const status = await callSoapMethod(client, "checkStatus", reqBody);     // What type?
 
     if (status === "ACCEPTED") {
-        const client = new ClientPostgres();
+        const client = new ClientPostgres({"host": "localhost", "port": 6002, "database": "catifyrest",
+                                           "user": "postgres", "password": "admin"});
         await client.connect();
 
         try {
