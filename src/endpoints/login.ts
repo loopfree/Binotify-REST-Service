@@ -21,7 +21,8 @@ function generateAccessToken(username: string) {
 }
 
 async function login(req: Request, res: Response) {
-    const passwordHash = hashPassword(req.body.password);
+    console.log(req);
+    const passwordHash = hashPassword(req.body.password === undefined ? "" : req.body.password as string);
     
     const client = new ClientPostgres({"host": "db-catify-rest", "port": 5432, "database": "catifyrest",
                                            "user": "postgres", "password": "admin"});
