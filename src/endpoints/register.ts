@@ -15,7 +15,7 @@ async function register(req: Request, res: Response) {
     const singerId = hashUsername(req.body.username);
     const passwordHash = hashPassword(req.body.password);
     
-    const client = new ClientPostgres({"host": "localhost", "port": 6002, "database": "catifyrest",
+    const client = new ClientPostgres({"host": "db-catify-rest", "port": 5432, "database": "catifyrest",
                                            "user": "postgres", "password": "admin"});
     await client.connect();
 

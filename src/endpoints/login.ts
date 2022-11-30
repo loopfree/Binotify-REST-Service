@@ -17,7 +17,7 @@ import { hashUsername, hashPassword } from "./../helper/hash";
 async function login(req: Request, res: Response) {
     const passwordHash = hashPassword(req.body.password);
     
-    const client = new ClientPostgres({"host": "localhost", "port": 6002, "database": "catifyrest",
+    const client = new ClientPostgres({"host": "db-catify-rest", "port": 5432, "database": "catifyrest",
                                            "user": "postgres", "password": "admin"});
     await client.connect();
 
