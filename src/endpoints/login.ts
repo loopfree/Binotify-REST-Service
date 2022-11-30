@@ -1,4 +1,5 @@
 import { Request, Response } from "express";
+import { sign } from "jsonwebtoken";
 import { Client as ClientPostgres, ResultIterator } from "ts-postgres";
 
 import { hashUsername, hashPassword } from "./../helper/hash";
@@ -14,7 +15,13 @@ import { hashUsername, hashPassword } from "./../helper/hash";
  * pesan tersebut disimpan di dalam json dengan dengan property
  * return
  */
+
+function generateAccessToken(username: string) {
+    return sign(username, process.env.TOKEN as string);
+}
+
 async function login(req: Request, res: Response) {
+    console.log(req);
     const passwordHash = hashPassword(req.body.password);
     
     const client = new ClientPostgres({"host": "db-catify-rest", "port": 5432, "database": "catifyrest",
@@ -25,7 +32,7 @@ async function login(req: Request, res: Response) {
 
     try {
 
-        const query = "SELECT isAdmin FROM \"User\" WHERE username = $1 AND password = $1";
+        const query = "SELECT isadmin FROM \"User\" WHERE username = $1 AND password = $2";
 
         const argument: any = [
             req.body.username,
@@ -34,8 +41,10 @@ async function login(req: Request, res: Response) {
 
         const result: Awaited<ResultIterator> = await client.query(query, argument);
 
-        for(const row of result) {
-            if(row.get("isAdmin") === "f") {
+        console.log(result);
+
+        for(const row of result.rows) {
+            if(row[0] == 'false') {
                 userType = "penyanyi";
             } else {
                 userType = "admin"
@@ -46,7 +55,8 @@ async function login(req: Request, res: Response) {
     }
 
     res.json({
-        return: userType
+        return: userType,
+        token: generateAccessToken(req.body.username)
     })
 }
 
