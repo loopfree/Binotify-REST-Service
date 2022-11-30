@@ -1,4 +1,4 @@
-FROM node:18-bullseye
+FROM node:16-alpine
 
 WORKDIR /app
 COPY . .

@@ -4,7 +4,7 @@ import { createSoapClient, callSoapMethod } from "./../helper/soapwrapper";
 
 async function approveSubscription(req: Request, res: Response) {
     console.log("Argument: ", req.body);
-    const url = "http://localhost:8042/admin?wsdl";
+    const url = "http://catify-soap:8042/admin?wsdl";
 
     const client: Client = await createSoapClient(url) as Client;
 

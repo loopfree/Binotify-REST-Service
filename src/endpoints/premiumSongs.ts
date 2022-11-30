@@ -5,7 +5,7 @@ import { Client as ClientPostgres } from "ts-postgres";
 
 async function getPremiumSongs(req: Request, res: Response) {
     const reqBody = req.body;          // {creatorId: 1, subscriberId: 1}
-    const url = "http://localhost:8042/check?wsdl";
+    const url = "http://catify-soap:8042/check?wsdl";
     const client: ClientSoap = await createSoapClient(url) as ClientSoap;
     const status = await callSoapMethod(client, "checkStatus", reqBody);     // What type? Awaited<string>
 
