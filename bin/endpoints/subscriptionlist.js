@@ -13,7 +13,7 @@ exports.getSubscriptionList = void 0;
 const soapwrapper_1 = require("./../helper/soapwrapper");
 function getSubscriptionList(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
-        const url = "http://localhost:8042/admin?wsdl";
+        const url = "http://catify-soap:8042/admin?wsdl";
         const client = yield (0, soapwrapper_1.createSoapClient)(url);
         // Memanggil fungsi SOAP bernama getSubscriptionRequests
         res.json(yield (0, soapwrapper_1.callSoapMethod)(client, "getSubscriptionRequests", {}));

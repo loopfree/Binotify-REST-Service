@@ -43,8 +43,21 @@ app.post("/premium_singer/song", (req, res) => {
     endpoint.getPremiumSingers(req, res);
 })
 
-app.get('/songs/premium', endpoint.getPremiumSongs);
-app.post('/songs/premium', endpoint.createPremiumSongs);
+app.get("/premium_singer/song", (req, res) => {
+    endpoint.getPremiumSongs(req, res);
+})
+
+app.post("/premium_singer/song/create", (req, res) => {
+    endpoint.createPremiumSongs(req, res);
+})
+
+app.post("/premium_singer/song/update", (req, res) => {
+    endpoint.updatePremiumSongs(req, res);
+})
+
+app.post("/premium_singer/song/delete", (req, res) => {
+    endpoint.deletePremiumSongs(req, res);
+})
 
 app.listen(port, () => {
     console.log(`App is running on :${port}`);
