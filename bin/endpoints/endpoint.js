@@ -13,6 +13,7 @@ exports.default = {
     declineSubscription: declineSubscription_1.declineSubscription,
     getPremiumSingers: premiumSingers_1.getPremiumSingers,
     getPremiumSongs: premiumSongs_1.getPremiumSongs,
+    createPremiumSongs: premiumSongs_1.createPremiumSongs,
     login: login_1.login,
     register: register_1.register
 };

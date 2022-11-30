@@ -12,10 +12,10 @@ const app = (0, express_1.default)();
 app.use((0, cors_1.default)());
 app.use(express_1.default.json());
 app.use(jwt_express_1.default.init("steven wen pro :v"));
-app.post("authenticate/login", jwt_express_1.default.active(), (req, res) => {
+app.post("/authenticate/login", jwt_express_1.default.active(), (req, res) => {
     endpoint_1.default.login(req, res);
 });
-app.post("authenticate/register", jwt_express_1.default.active(), (req, res) => {
+app.post("/authenticate/register", jwt_express_1.default.active(), (req, res) => {
     endpoint_1.default.register(req, res);
 });
 app.get("/subscription/list", jwt_express_1.default.active(), (req, res) => {
@@ -33,6 +33,8 @@ app.post("/premium_singer/list", jwt_express_1.default.active(), (req, res) => {
 app.post("/premium_singer/song", jwt_express_1.default.active(), (req, res) => {
     endpoint_1.default.getPremiumSingers(req, res);
 });
+app.get('/songs/premium', endpoint_1.default.getPremiumSongs);
+app.post('/songs/premium', jwt_express_1.default.active(), endpoint_1.default.createPremiumSongs);
 app.listen(port, () => {
     console.log(`App is running on :${port}`);
 });

@@ -11,11 +11,11 @@ app.use(cors());
 app.use(express.json());
 app.use(jwt.init("steven wen pro :v"));
 
-app.post("authenticate/login", jwt.active(), (req, res) => {
+app.post("/authenticate/login", jwt.active(), (req, res) => {
     endpoint.login(req, res);
 });
 
-app.post("authenticate/register", jwt.active(), (req, res) => {
+app.post("/authenticate/register", jwt.active(), (req, res) => {
     endpoint.register(req, res);
 })
 
@@ -38,6 +38,9 @@ app.post("/premium_singer/list", jwt.active(), (req, res) => {
 app.post("/premium_singer/song", jwt.active(), (req, res) => {
     endpoint.getPremiumSingers(req, res);
 })
+
+app.get('/songs/premium', endpoint.getPremiumSongs);
+app.post('/songs/premium', jwt.active(), endpoint.createPremiumSongs);
 
 app.listen(port, () => {
     console.log(`App is running on :${port}`);
