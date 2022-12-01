@@ -2,7 +2,7 @@ import { Response, Request } from "express";
 import { Client } from "ts-postgres";
 
 async function getPremiumSingers(req: Request, res: Response) {
-    const client = new Client({"host": "localhost", "port": 5432, "database": "catifyrest",
+    const client = new Client({"host": "db-catify-rest", "port": 5432, "database": "catifyrest",
                                "user": "postgres", "password": "admin"});
     await client.connect();
 
