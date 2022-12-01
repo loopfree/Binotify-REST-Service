@@ -9,6 +9,7 @@ import { hashUsername, hashPassword } from "./../helper/hash";
  * email, username, name, password
  */
 async function register(req: Request, res: Response) {
+    console.log(req.body);
     const passwordHash = hashPassword(req.body.password);
     
     const client = new ClientPostgres({"host": "db-catify-rest", "port": 5432, "database": "catifyrest",
@@ -17,24 +18,30 @@ async function register(req: Request, res: Response) {
 
     try {
 
-        const query = `INSERT \"User\" (email, password, username, name, isadmin) 
+        const query = `INSERT INTO \"User\" (email, password, username, name, isadmin) 
                        VALUES ($1, $2, $3, $4, $5);`;
 
         const argument : any[] = [
             req.body.email,
-            req.body.password,      // TODO: change to hashed password
+            passwordHash,
             req.body.username,
             req.body.name,
-            'f'
+            false
         ];
 
-        client.query(query, argument);
+        await client.query(query, argument);
 
-    } finally {
+        res.json({
+            return: "succeed"
+        });
+    } catch(e) {
+        console.log(e);
+        res.json({
+            return: "failed"
+        });
+    }finally {
         await client.end();
     }
-
-
 }
 
 export {
