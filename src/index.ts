@@ -27,11 +27,11 @@ app.get("/subscription/list", authenticateToken, (req, res) => {
     endpoint.getSubscriptionList(req, res);
 });
 
-app.post("/subscription/approve", (req, res) => {
+app.post("/subscription/approve", authenticateToken, (req, res) => {
     endpoint.approveSubscription(req, res);
 })
 
-app.post("/subscription/decline", (req, res) => {
+app.post("/subscription/decline", authenticateToken, (req, res) => {
     endpoint.declineSubscription(req, res);
 })
 
@@ -43,19 +43,19 @@ app.get("/subscriber/premium_song", (req, res) => {
     endpoint.getPremiumSongsBySubscriber(req, res);
 })
 
-app.get("/premium_singer/song/list", (req, res) => {
+app.get("/premium_singer/song/list", authenticateToken, (req, res) => {
     endpoint.getPremiumSongsBySinger(req, res);
 })
 
-app.post("/premium_singer/song/create", (req, res) => {
+app.post("/premium_singer/song/create", authenticateToken, (req, res) => {
     endpoint.createPremiumSongs(req, res);
 })
 
-app.post("/premium_singer/song/update", (req, res) => {
+app.post("/premium_singer/song/update", authenticateToken, (req, res) => {
     endpoint.updatePremiumSongs(req, res);
 })
 
-app.post("/premium_singer/song/delete", (req, res) => {
+app.post("/premium_singer/song/delete", authenticateToken, (req, res) => {
     endpoint.deletePremiumSongs(req, res);
 })
 
