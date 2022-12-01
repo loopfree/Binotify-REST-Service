@@ -21,7 +21,6 @@ function generateAccessToken(username: string) {
 }
 
 async function login(req: Request, res: Response) {
-    console.log(req);
     const passwordHash = hashPassword(req.body.password === undefined ? "" : req.body.password as string);
     
     const client = new ClientPostgres({"host": "db-catify-rest", "port": 5432, "database": "catifyrest",
@@ -42,7 +41,8 @@ async function login(req: Request, res: Response) {
         const result: Awaited<ResultIterator> = await client.query(query, argument);
 
         for(const row of result.rows) {
-            if(row[0] == 'false') {
+            console.log(row[0]);
+            if(row[0] == false) {
                 userType = "penyanyi";
             } else {
                 userType = "admin"
