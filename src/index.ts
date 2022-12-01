@@ -39,12 +39,12 @@ app.post("/premium_singer/list", (req, res) => {
     endpoint.getPremiumSingers(req, res);
 })
 
-app.post("/premium_singer/song", (req, res) => {
-    endpoint.getPremiumSingers(req, res);
+app.get("/subscriber/premium_song", (req, res) => {
+    endpoint.getPremiumSongsBySubscriber(req, res);
 })
 
-app.get("/premium_singer/song", (req, res) => {
-    endpoint.getPremiumSongs(req, res);
+app.get("/premium_singer/song/list", (req, res) => {
+    endpoint.getPremiumSongsBySinger(req, res);
 })
 
 app.post("/premium_singer/song/create", (req, res) => {
