@@ -23,7 +23,7 @@ app.post("/authenticate/register", (req, res) => {
     endpoint.register(req, res);
 })
 
-app.get("/subscription/list", (req, res) => {
+app.get("/subscription/list", authenticateToken, (req, res) => {
     endpoint.getSubscriptionList(req, res);
 });
 
