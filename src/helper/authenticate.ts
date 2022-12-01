@@ -2,8 +2,8 @@ import { Request, Response } from "express";
 import jwt from "jsonwebtoken";
 
 function authenticateToken(req: Request, res: Response, next: any) {
-    const authHeader = req.headers['authorization']
-    const token = authHeader && authHeader.split(' ')[1]
+
+    const token: string = req.headers.authorization === undefined ? "" : req.headers.authorization as string;
 
     if (token == null) return res.sendStatus(401)
 
