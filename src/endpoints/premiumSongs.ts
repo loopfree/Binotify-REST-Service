@@ -26,7 +26,7 @@ async function getPremiumSongsBySubscriber(req: Request, res: Response) {
 
         try {
             const query = "SELECT song_id, judul, audio_path FROM \"Song\" WHERE penyanyi_id = $1;";
-            const result = client.query(query, [creatorId]);
+            const result = await client.query(query, [creatorId]);
             var resBody : {songs: {}[]} = {songs: []};
             for await (const row of result) {
                 resBody["songs"].push({id: row.get("song_id"), judul: row.get("judul"), audio_path: row.get("audio_path")});
@@ -52,7 +52,7 @@ async function getPremiumSongsBySinger(req: Request, res: Response) {
 
     try {
         const query = "SELECT song_id, judul, audio_path FROM \"Song\" WHERE penyanyi_id = $1;";
-        const result = client.query(query, [creatorId]);
+        const result = await client.query(query, [creatorId]);
         var resBody : {songs: {}[]} = {songs: []};
         for await (const row of result) {
             resBody["songs"].push({id: row.get("song_id"), judul: row.get("judul"), audio_path: row.get("audio_path")});
@@ -75,7 +75,7 @@ async function createPremiumSongs(req: Request, res: Response) {
 
     try {
         const query = "INSERT INTO \"Song\"(judul, audio_path, penyanyi_id) VALUES ($1, $2, $3);";
-        client.query(query, [reqBody["title"], reqBody["audioPath"], reqBody["creatorId"]]);
+        await client.query(query, [reqBody["title"], reqBody["audioPath"], reqBody["creatorId"]]);
         return res.sendStatus(201);
     } finally {
         await client.end();
@@ -92,7 +92,7 @@ async function deletePremiumSongs(req: Request, res: Response) {
 
     try {
         const query = "DELETE FROM \"Song\" WHERE song_id=$1;";
-        const result = client.query(query, [reqBody["songId"]]);
+        const result = await client.query(query, [reqBody["songId"]]);
         return res.sendStatus(201);
     } finally {
         await client.end();
@@ -109,11 +109,11 @@ async function updatePremiumSongs(req: Request, res: Response) {
     try {
         if (reqBody["title"]) {
             const query = "UPDATE \"Song\" SET judul=$1, audio_path=$2 WHERE song_id=$3;";
-            const result = client.query(query, [reqBody["title"], reqBody["audioPath"], reqBody["songId"]]);
+            const result = await client.query(query, [reqBody["title"], reqBody["audioPath"], reqBody["songId"]]);
         }
         else {
             const query = "UPDATE \"Song\" SET audio_path=$1 WHERE song_id=$2;";
-            const result = client.query(query, [reqBody["audioPath"], reqBody["songId"]]);
+            const result = await client.query(query, [reqBody["audioPath"], reqBody["songId"]]);
         }
         
         return res.sendStatus(201);
