@@ -43,7 +43,7 @@ app.get("/subscriber/:s_id/premium_song/:c_id", (req, res) => {
     endpoint.getPremiumSongsBySubscriber(req, res);
 })
 
-app.get("/premium_singer/song/list", authenticateToken, (req, res) => {
+app.get("/premium_singer/:c_id/song/list", authenticateToken, (req, res) => {
     endpoint.getPremiumSongsBySinger(req, res);
 })
 
