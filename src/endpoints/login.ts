@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { sign } from "jsonwebtoken";
-import { Client as ClientPostgres, ResultIterator } from "ts-postgres";
+import { Client as ClientPostgres, ResultIterator, Value } from "ts-postgres";
 
 import { hashUsername, hashPassword } from "./../helper/hash";
 
@@ -28,10 +28,11 @@ async function login(req: Request, res: Response) {
     await client.connect();
 
     let userType: string = "none";
+    let userId: Value = 0;
 
     try {
 
-        const query = "SELECT isadmin FROM \"User\" WHERE username = $1 AND password = $2";
+        const query = "SELECT isadmin, user_id FROM \"User\" WHERE username = $1 AND password = $2";
 
         const argument: any = [
             req.body.username,
@@ -42,6 +43,7 @@ async function login(req: Request, res: Response) {
 
         for(const row of result.rows) {
             console.log(row[0]);
+            userId = row[1];
             if(row[0] == false) {
                 userType = "penyanyi";
             } else {
@@ -53,7 +55,8 @@ async function login(req: Request, res: Response) {
     }
 
     res.json({
-        return: userType,
+        type: userType,
+        id: userId,
         token: generateAccessToken(req.body.username)
     })
 }
