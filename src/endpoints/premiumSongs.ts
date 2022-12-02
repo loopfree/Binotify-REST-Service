@@ -19,7 +19,7 @@ async function getPremiumSongsBySubscriber(req: Request, res: Response) {
     }
 
     const status = await callSoapMethod(client, "checkStatus", arg);
-    if (status.return === "ACCEPTED") {
+    if (status === "ACCEPTED") {
         const client = new ClientPostgres({"host": "db-catify-rest", "port": 5432, "database": "catifyrest",
                                            "user": "postgres", "password": "admin"});
         await client.connect();
