@@ -107,13 +107,13 @@ async function updatePremiumSongs(req: Request, res: Response) {
     await client.connect();
 
     try {
-        if (reqBody["title"]) {
+        if (reqBody["audioPath"]) {
             const query = "UPDATE \"Song\" SET judul=$1, audio_path=$2 WHERE song_id=$3;";
             const result = await client.query(query, [reqBody["title"], reqBody["audioPath"], reqBody["songId"]]);
         }
         else {
-            const query = "UPDATE \"Song\" SET audio_path=$1 WHERE song_id=$2;";
-            const result = await client.query(query, [reqBody["audioPath"], reqBody["songId"]]);
+            const query = "UPDATE \"Song\" SET judul=$1 WHERE song_id=$2;";
+            const result = await client.query(query, [reqBody["title"], reqBody["songId"]]);
         }
         
         return res.sendStatus(201);
