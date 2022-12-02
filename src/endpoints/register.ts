@@ -17,23 +17,36 @@ async function register(req: Request, res: Response) {
     await client.connect();
 
     try {
-
-        const query = `INSERT INTO \"User\" (email, password, username, name, isadmin) 
-                       VALUES ($1, $2, $3, $4, $5);`;
-
-        const argument : any[] = [
+        const checkQuery = `SELECT user_id FROM \"User\" WHERE email = $1 OR username = $2;`;
+        const checkArgument : any[] = [
             req.body.email,
-            passwordHash,
             req.body.username,
-            req.body.name,
-            false
         ];
+        const checkRes = await client.query(checkQuery, checkArgument);
 
-        await client.query(query, argument);
+        if (checkRes.rows.length > 0) {
+            res.json({
+                return: "existed"
+            });
+        } 
+        else {
+            const query = `INSERT INTO \"User\" (email, password, username, name, isadmin) 
+                        VALUES ($1, $2, $3, $4, $5);`;
 
-        res.json({
-            return: "succeed"
-        });
+            const argument : any[] = [
+                req.body.email,
+                passwordHash,
+                req.body.username,
+                req.body.name,
+                false
+            ];
+
+            await client.query(query, argument);
+
+            res.json({
+                return: "succeed"
+            });
+        }
     } catch(e) {
         console.log(e);
         res.json({
