@@ -12,7 +12,7 @@ async function getPremiumSongsBySubscriber(req: Request, res: Response) {
     const client: ClientSoap = await createSoapClient(url) as ClientSoap;
     const status = await callSoapMethod(client, "checkStatus", {creatorId: creatorId, subscriberId: subscriberId});
     if (status === "ACCEPTED") {
-        const client = new ClientPostgres({"host": "localhost", "port": 6002, "database": "catifyrest",
+        const client = new ClientPostgres({"host": "db-catify-rest", "port": 5432, "database": "catifyrest",
                                            "user": "postgres", "password": "admin"});
         await client.connect();
 
@@ -38,7 +38,7 @@ async function getPremiumSongsBySubscriber(req: Request, res: Response) {
 
 async function getPremiumSongsBySinger(req: Request, res: Response) {
     const reqBody = req.body;          // {creatorId: 1}
-    const client = new ClientPostgres({"host": "localhost", "port": 6002, "database": "catifyrest",
+    const client = new ClientPostgres({"host": "db-catify-rest", "port": 5432, "database": "catifyrest",
                                         "user": "postgres", "password": "admin"});
     await client.connect();
 
@@ -61,7 +61,7 @@ async function getPremiumSongsBySinger(req: Request, res: Response) {
 async function createPremiumSongs(req: Request, res: Response) {
     const reqBody = req.body;          // {judul: '', audioPath: '', creatorId: 1}
 
-    const client = new ClientPostgres({"host": "localhost", "port": 6002, "database": "catifyrest",
+    const client = new ClientPostgres({"host": "db-catify-rest", "port": 5432, "database": "catifyrest",
                                         "user": "postgres", "password": "admin"});
     await client.connect();
 
@@ -77,7 +77,7 @@ async function createPremiumSongs(req: Request, res: Response) {
 async function deletePremiumSongs(req: Request, res: Response) {
     const reqBody = req.body;          // {songId: 1}
 
-    const client = new ClientPostgres({"host": "localhost", "port": 6002, "database": "catifyrest",
+    const client = new ClientPostgres({"host": "db-catify-rest", "port": 5432, "database": "catifyrest",
                                         "user": "postgres", "password": "admin"});
     await client.connect();
 
@@ -93,7 +93,7 @@ async function deletePremiumSongs(req: Request, res: Response) {
 async function updatePremiumSongs(req: Request, res: Response) {
     const reqBody = req.body;          // {judul: '', audioPath: '', songId: 1}
 
-    const client = new ClientPostgres({"host": "localhost", "port": 6002, "database": "catifyrest",
+    const client = new ClientPostgres({"host": "db-catify-rest", "port": 5432, "database": "catifyrest",
                                         "user": "postgres", "password": "admin"});
     await client.connect();
 
