@@ -1,5 +1,7 @@
 import { Response, Request } from "express";
 import { Client as ClientSoap } from "soap";
+
+import { apikey } from "./../helper/apikey";
 import { createSoapClient, callSoapMethod } from "./../helper/soapwrapper";
 import { Client as ClientPostgres } from "ts-postgres";
 
@@ -10,7 +12,14 @@ async function getPremiumSongsBySubscriber(req: Request, res: Response) {
     // const reqBody = req.body;          // {creatorId: 1, subscriberId: 1}
     const url = "http://catify-soap:8042/check?wsdl";
     const client: ClientSoap = await createSoapClient(url) as ClientSoap;
-    const status = await callSoapMethod(client, "checkStatus", {creatorId: creatorId, subscriberId: subscriberId});
+
+    const arg: any = {
+        apiKey: apikey,
+        creatorId: creatorId,
+        subscriberId: subscriberId
+    }
+
+    const status = await callSoapMethod(client, "checkStatus", arg);
     if (status === "ACCEPTED") {
         const client = new ClientPostgres({"host": "db-catify-rest", "port": 5432, "database": "catifyrest",
                                            "user": "postgres", "password": "admin"});
