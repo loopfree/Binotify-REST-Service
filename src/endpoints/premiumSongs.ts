@@ -4,10 +4,13 @@ import { createSoapClient, callSoapMethod } from "./../helper/soapwrapper";
 import { Client as ClientPostgres } from "ts-postgres";
 
 async function getPremiumSongsBySubscriber(req: Request, res: Response) {
-    const reqBody = req.body;          // {creatorId: 1, subscriberId: 1}
+    const creatorId = req.params.c_id; // 1
+    const subscriberId = req.params.s_id; // 
+    console.log("getPremiumSongsBySubscriber");
+    // const reqBody = req.body;          // {creatorId: 1, subscriberId: 1}
     const url = "http://catify-soap:8042/check?wsdl";
     const client: ClientSoap = await createSoapClient(url) as ClientSoap;
-    const status = await callSoapMethod(client, "checkStatus", reqBody);
+    const status = await callSoapMethod(client, "checkStatus", {creatorId: creatorId, subscriberId: subscriberId});
     if (status === "ACCEPTED") {
         const client = new ClientPostgres({"host": "localhost", "port": 6002, "database": "catifyrest",
                                            "user": "postgres", "password": "admin"});
@@ -15,7 +18,7 @@ async function getPremiumSongsBySubscriber(req: Request, res: Response) {
 
         try {
             const query = "SELECT song_id, judul, audio_path FROM \"Song\" WHERE penyanyi_id = $1;";
-            const result = client.query(query, [reqBody["creatorId"]]);
+            const result = client.query(query, [creatorId]);
             var resBody : {songs: {}[]} = {songs: []};
             for await (const row of result) {
                 resBody["songs"].push({id: row.get("song_id"), judul: row.get("judul"), audio_path: row.get("audio_path")});

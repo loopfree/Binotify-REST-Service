@@ -39,7 +39,7 @@ app.post("/premium_singer/list", (req, res) => {
     endpoint.getPremiumSingers(req, res);
 })
 
-app.get("/subscriber/premium_song", (req, res) => {
+app.get("/subscriber/:s_id/premium_song/:c_id", (req, res) => {
     endpoint.getPremiumSongsBySubscriber(req, res);
 })
 
