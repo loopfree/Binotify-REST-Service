@@ -76,9 +76,7 @@ async function createPremiumSongs(req: Request, res: Response) {
     try {
         const query = "INSERT INTO \"Song\"(judul, audio_path, penyanyi_id) VALUES ($1, $2, $3);";
         client.query(query, [reqBody["title"], reqBody["audioPath"], reqBody["creatorId"]]);
-        const getIdQuery = "SELECT LAST_INSERT_ID() as id;";
-        const result = client.query(getIdQuery);
-        return res.status(201).json({id: (await result.first() as ResultRow).get('id')});
+        return res.sendStatus(201);
     } finally {
         await client.end();
     }
