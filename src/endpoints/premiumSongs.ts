@@ -84,6 +84,7 @@ async function createPremiumSongs(req: Request, res: Response) {
 
 async function deletePremiumSongs(req: Request, res: Response) {
     const reqBody = req.body;          // {songId: 1}
+    console.log("deletePremiumSongs with id: " + reqBody["songId"]);
 
     const client = new ClientPostgres({"host": "db-catify-rest", "port": 5432, "database": "catifyrest",
                                         "user": "postgres", "password": "admin"});
@@ -100,6 +101,7 @@ async function deletePremiumSongs(req: Request, res: Response) {
 
 async function updatePremiumSongs(req: Request, res: Response) {
     const reqBody = req.body;          // {judul: '', audioPath: '', songId: 1}
+    console.log("updatePremiumSongs with id: " + reqBody["songId"]);
 
     const client = new ClientPostgres({"host": "db-catify-rest", "port": 5432, "database": "catifyrest",
                                         "user": "postgres", "password": "admin"});
